@@ -36,13 +36,13 @@ void BayesianFilter::init(const Map &map_1d, HelpFunctions &helpers) {
     int x = single_landmark.x;
     belief_x_init_[x] = 1;
     if (x > 0) {
-      belief_x_init_[x-1] = 1;
+      belief_x_init_[x - 1] = 1;
     }
 
-    if(x < 99) {
-      belief_x_init_[x+1] = 1;
+    if (x < 99) {
+      belief_x_init_[x + 1] = 1;
     }
-  }//end for loop
+  } //end for loop
 
   //normalize initial believe
   belief_x_init_ = helpers.NormalizeVector(belief_x_init_);
@@ -51,27 +51,27 @@ void BayesianFilter::init(const Map &map_1d, HelpFunctions &helpers) {
 }
 
 void BayesianFilter::ProcessMeasurement(const MeasurementPackage &measurements,
-                                      const Map &map_1d,
-                                      HelpFunctions &helpers){
+                                        const Map &map_1d,
+                                        HelpFunctions &helpers) {
 
   /******************************************************************************
    *  Set init belief of state vector:
    ******************************************************************************/
-  if(!is_initialized_){
+  if (!is_initialized_) {
     init(map_1d, helpers);
-  }//end if
+  } //end if
 
   /******************************************************************************
    *  motion model and observation update
    ******************************************************************************/
-  std::cout <<"-->motion model for state x ! \n" << std::endl;
+  std::cout << "-->motion model for state x ! \n" << std::endl;
 
   //get current observations and control information:
   MeasurementPackage::Control controls = measurements.control_;
   MeasurementPackage::Observation observations = measurements.observation_;
 
   //run over all bel_x values (index represents the pose in x!):
-  for (int i=0; i < belief_x.size(); ++i) {
+  for (int i = 0; i < belief_x.size(); ++i) {
 
     float pose_i = float(i);
 
@@ -92,7 +92,8 @@ void BayesianFilter::ProcessMeasurement(const MeasurementPackage &measurements,
       // x: difference between bel_x index and state space index
       // mu: the movement from controls defined above
       // std: defined eariler
-      float transition_model_probability = helpers.Normpdf(distance_ij, controls.delta_x, control_std_);
+      float transition_model_probability = helpers.Normpdf(distance_ij,
+          controls.delta_x, control_std_);
 
       //Calculate motion model
       // ADD the transition prob multiplied by the initial believe
