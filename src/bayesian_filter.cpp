@@ -21,7 +21,7 @@ BayesianFilter::~BayesianFilter() {
 
 }
 
-void BayesianFilter::init(const Map &map_1d, HelpFunctions &helpers) {
+void BayesianFilter::Init(const Map &map_1d, HelpFunctions &helpers) {
   //run over map, all landmark values in map_1d
   for (int l = 0; l < map_1d.landmark_list_.size(); ++l) {
     //get landmark l from map
@@ -58,7 +58,7 @@ void BayesianFilter::ProcessMeasurement(const MeasurementPackage &measurements,
    *  Set init belief of state vector:
    ******************************************************************************/
   if (!is_initialized_) {
-    init(map_1d, helpers);
+    Init(map_1d, helpers);
   } //end if
 
   /******************************************************************************

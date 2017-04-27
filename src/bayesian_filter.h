@@ -32,8 +32,7 @@ public:
   std::vector<float> belief_x;
 
 private:
-
-  void init(const Map &map_1d, HelpFunctions &helpers);
+  void Init(const Map &map_1d, HelpFunctions &helpers);
 
   bool is_initialized_;
   std::vector<float> belief_x_init_;
