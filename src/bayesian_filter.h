@@ -32,11 +32,36 @@ public:
   std::vector<float> belief_x;
 
 private:
+  /**
+   * Initializes the initial belief
+   * @param map_1d, 1D map of all landmarks
+   * @helpers, helper functions class reference
+   */
   void Init(const Map &map_1d, HelpFunctions &helpers);
+  /**
+   * Applies motion model to calculate prior Xt (predict Xt)
+   * @param measurements, list of measurements (controls, observations)
+   * @param map_1d, 1D map of all landmarks
+   * @helpers, helper functions class reference
+   */
+  float Predict(int i, const MeasurementPackage &measurements,
+               const Map &map_1d,
+               HelpFunctions &helpers);
+
+  /**
+   * Applies observation model to calculate likelihood of current observation Zt for Xt predicted
+   * @param measurements, list of measurements (controls, observations)
+   * @param map_1d, 1D map of all landmarks
+   * @helpers, helper functions class reference
+   */
+  float Update(int i, const MeasurementPackage &measurements,
+               const Map &map_1d,
+               HelpFunctions &helpers);
 
   bool is_initialized_;
   std::vector<float> belief_x_init_;
   float control_std_;
+  float observation_std_;
 };
 
 
