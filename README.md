@@ -19,9 +19,9 @@ HelpFunctions helper;
 helper.ReadMapData("data/map_1d.txt", map_1d);
 
 //read in data to measurement package list:
-helper.ReadMeasurementData("data/example03/control_data.txt",
-"data/example03/observations/",
-measurement_pack_list);
+helper.ReadMeasurementData( "data/example03/control_data.txt", 
+                            "data/example03/observations/",
+                            measurement_pack_list);
 
 //create instance of 1d_bayesian localization filter:
 BayesianFilter localization_1d_bayesian;
@@ -32,10 +32,10 @@ size_t T = measurement_pack_list.size();
 //cycle:
 for (size_t t = 0; t < T; ++t){
 
-//Call 1d_bayesian filter:
-localization_1d_bayesian.ProcessMeasurement(measurement_pack_list[t],
-map_1d,
-helper);
+    //Call 1d_bayesian filter:
+    localization_1d_bayesian.ProcessMeasurement(measurement_pack_list[t],
+    map_1d,
+    helper);
 }
 
 ```
