@@ -2,6 +2,44 @@
 
 Localize a vehicle in a given map and sensors data, using Markov Localization. This code follows a very simple form of 1D Markov Localization.
 
+
+## Getting Started
+
+```
+//declare map:
+Map map_1d;
+
+//declare measurement list:
+std::vector<MeasurementPackage> measurement_pack_list;
+
+//declare helpers:
+HelpFunctions helper;
+
+//read map:
+helper.ReadMapData("data/map_1d.txt", map_1d);
+
+//read in data to measurement package list:
+helper.ReadMeasurementData("data/example03/control_data.txt",
+"data/example03/observations/",
+measurement_pack_list);
+
+//create instance of 1d_bayesian localization filter:
+BayesianFilter localization_1d_bayesian;
+
+//define number of time steps:
+size_t T = measurement_pack_list.size();
+
+//cycle:
+for (size_t t = 0; t < T; ++t){
+
+//Call 1d_bayesian filter:
+localization_1d_bayesian.ProcessMeasurement(measurement_pack_list[t],
+map_1d,
+helper);
+}
+
+```
+
 ## Assumptions
 
 This code implements 1D Markov localization and assumes that 
